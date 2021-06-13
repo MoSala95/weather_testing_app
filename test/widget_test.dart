@@ -15,11 +15,12 @@ import 'package:weather_testing_app/main.dart';
 import 'package:weather_testing_app/models/weather.dart';
 import 'package:weather_testing_app/pages/weather_search_page.dart';
 import 'package:bloc_test/bloc_test.dart';
+
 void main() {
   WeatherBloc weatherBloc;
  
   setUpAll(() {
-     weatherBloc = WeatherBloc(WeatherRepositoryImpl());
+     weatherBloc = WeatherBloc(FakeWeatherRepository());
 
   });
   testWidgets('Weather loading test', (WidgetTester tester) async {

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:dartz/dartz.dart';
@@ -10,6 +11,17 @@ abstract class WeatherRepository {
   Future<Either<Unit,Weather>> fetchWeather(String cityName);
 }
 
+ class FakeWeatherRepository implements WeatherRepository {
+  final List<Completer<Either<Unit,Weather>>> completers = [];
+  @override
+  Future<Either<Unit,Weather>> fetchWeather(String cityName) {
+    final completer = Completer<Either<Unit,Weather>>();
+    completer.complete(right(Weather(main: Main(temp: 22.5))));
+    completers.add(completer);
+
+    return completer.future;
+  }
+}
 class WeatherRepositoryImpl implements WeatherRepository {
   @override
   Future<Either<Unit,Weather>> fetchWeather(String cityName) async{
