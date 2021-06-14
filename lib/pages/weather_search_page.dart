@@ -49,7 +49,8 @@ class _WeatherSearchPageState extends State<WeatherSearchPage> {
 
   Widget buildLoading() {
     return Center(
-       child: CircularProgressIndicator(key:Key("progress_indicator") ,),
+      key:Key("progress_indicator") ,
+       child: CircularProgressIndicator(),
     );
   }
 
@@ -84,7 +85,7 @@ class CityInputField extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 50),
       child: TextField(
-        key: Key("getData"),
+        key: Key("search_field"),
         onSubmitted: (value) => submitCityName(context, value),
         textInputAction: TextInputAction.search,
         decoration: InputDecoration(

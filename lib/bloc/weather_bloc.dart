@@ -22,6 +22,7 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
         print("map events");
         yield WeatherLoading();
         final weather = await _weatherRepository.fetchWeather(event.cityName);
+        print(weather.isRight());
         yield weather.fold((l) => WeatherError("Couldn't fetch weather"), (r) =>  WeatherLoaded(r));
       } on NetworkException {
         yield WeatherError("Couldn't fetch weather");

@@ -27,12 +27,16 @@ import 'package:weather_testing_app/pages/weather_search_page.dart';
 
         ),));
         expect(find.byType(CityInputField), findsWidgets);
-        final expectedStates = [WeatherLoading(),WeatherLoaded(Weather(main: Main(temp: 22.5)))];
+
+
         weatherBloc.add(GetWeather("cairo"));
         await tester.pumpAndSettle();
         expectLater(
           weatherBloc.stream,
-          emitsInAnyOrder(expectedStates),
+          emitsInOrder([
+            isA<WeatherLoading>(),
+            isA<WeatherLoaded>(),
+          ]),
         );
        });
     });

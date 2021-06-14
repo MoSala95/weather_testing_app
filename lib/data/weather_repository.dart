@@ -18,7 +18,6 @@ abstract class WeatherRepository {
     final completer = Completer<Either<Unit,Weather>>();
     completer.complete(right(Weather(main: Main(temp: 22.5))));
     completers.add(completer);
-
     return completer.future;
   }
 }
