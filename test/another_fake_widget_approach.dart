@@ -55,5 +55,34 @@ void main() {
 
       });
     });
+    testWidgets('Weather error test', (WidgetTester tester) async {
+      await tester.runAsync(() async {
+        await tester.pumpWidget(MaterialApp(home:  BlocProvider.value(
+          value: weatherBloc,
+          child: WeatherSearchPage(),
+
+        ),));
+        when(mockWeatherRepository.fetchWeather.call(any))
+            .thenAnswer((_) async {
+          await Future.delayed(Duration.zero);
+          return left(unit)  ;
+        });
+        expect(find.byType(CityInputField), findsWidgets);
+
+        await tester.enterText(find.byKey(new Key('search_field')), 'cairo');
+        await tester.testTextInput.receiveAction(TextInputAction.search);
+
+        await tester.pump();
+        await tester.pump(Duration.zero);
+        print(weatherBloc.state);
+
+        expect(find.byKey(Key("progress_indicator")), findsOneWidget);
+        await tester.idle();
+        await tester.pump();
+        print(weatherBloc.state);
+        expect(find.byKey(Key("error_bar")), findsWidgets);
+
+      });
+    });
   });
 }
