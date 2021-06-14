@@ -31,23 +31,23 @@ void main() {
           child: WeatherSearchPage(),
 
         ),));
-        expect(find.byType(CityInputField), findsWidgets);
-
-        final textSearchField = find.byKey(Key("search_field"));
-        await tester.enterText(textSearchField, "cairo");
         when(mockWeatherRepository.fetchWeather.call(any))
             .thenAnswer((_) async {
-              return right(Weather(main: Main(temp: 22.5)))  ;
-        } );
-        weatherBloc.add(GetWeather("cairo"));
-        print(weatherBloc.state);
-        await tester.pump(Duration(seconds: 1));
-        //expect(find.byKey(Key("progress_indicator")), findsWidgets);
-
-
+          await Future.delayed(Duration.zero);
+          return right(Weather(main: Main(temp: 22.5)))  ;
+        });
         expect(find.byType(CityInputField), findsWidgets);
+
+        await tester.enterText(find.byKey(new Key('search_field')), 'cairo');
+        await tester.testTextInput.receiveAction(TextInputAction.search);
+
+        await tester.pump();
+        await tester.pump(Duration.zero);
         print(weatherBloc.state);
-        await tester.pumpAndSettle();
+
+        expect(find.byKey(Key("progress_indicator")), findsOneWidget);
+        await tester.idle();
+        await tester.pump();
         print(weatherBloc.state);
 
         expect(find.byType(CityInputField), findsWidgets);
