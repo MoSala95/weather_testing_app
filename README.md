@@ -4,7 +4,10 @@ A new Flutter application.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+This demo app uses Open weather api to fetch current temperature of any city -please create your own api key from their website it's free-.
+main porpuse of project is two things:
+first, how to use bloc as state mangemnt.
+second, which is more importantly how to do widget test.
 
 A few resources to get you started if this is your first Flutter project:
 
